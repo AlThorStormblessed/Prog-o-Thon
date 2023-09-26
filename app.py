@@ -14,11 +14,12 @@ from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 import math
+global output
 
 def open_spot():
     # Replace with your own Client ID and Client Secret
-    CLIENT_ID = "526b0f5124ba4581b6c930d4b9401e66" #'c015d4bcb35646ac9770a14ca4ab8a14' '350629a9f7a0475c9cb444456f4d6a71' '526b0f5124ba4581b6c930d4b9401e66'
-    CLIENT_SECRET = "93be1c41f8ec4a6c8263c256fbbd403b" #'b1a46cb4fe0f4270a50cb65f0b3ca101' '2d9ea81deea14aa282ddae73bb4d086f' '93be1c41f8ec4a6c8263c256fbbd403b'
+    CLIENT_ID = "2ce05a82e04546f1a45d33e19f8d2f45"
+    CLIENT_SECRET = "5e1cfa53241449de99e9cf89329cdd69"
 
     # Base64 encode the client ID and client secret
     client_credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
@@ -123,30 +124,33 @@ def get_trending_playlist_data(playlist_id, access_token):
     return df
 
 def similarity(music_df, music_df_2):
-    music_features = music_df[['danceability', 'energy', 'key', 
-                           'loudness', 'mode', 'speechiness', 'acousticness',
-                           'instrumentalness', 'liveness', 'valence', 'tempo']].values
+    music_features = music_df[['danceability', 'energy', 
+            'loudness', 'speechiness', 'acousticness',
+            'instrumentalness', 'liveness', 'valence', 'tempo']].values
     music_features_scaled = scaler.fit_transform(music_features)
 
-    music_features_2 = music_df_2[['danceability', 'energy', 'key', 
-                           'loudness', 'mode', 'speechiness', 'acousticness',
-                           'instrumentalness', 'liveness', 'valence', 'tempo']].values
+    music_features_2 = music_df_2[['danceability', 'energy', 
+            'loudness', 'speechiness', 'acousticness',
+            'instrumentalness', 'liveness', 'valence', 'tempo']].values
     music_features_scaled_2 = scaler.fit_transform(music_features_2)
 
     music_mean_1 = music_features_scaled.mean(axis = 0)
     music_mean_2 = music_features_scaled_2.mean(axis = 0)
 
-    return np.mean(cosine_similarity(music_features_scaled, music_features_scaled_2))
+    cos_sim = np.diag(cosine_similarity(music_features_scaled, music_features_scaled_2))
+    cos_sim = np.where(cos_sim > 1, 1, cos_sim)
+
+    return np.mean(90 - (np.arccos(cos_sim)) * 57.2958) * 100/90
 
 def content_based_recommendations(music_df, num_recommendations=5):
-    music_features = music_df[['danceability', 'energy', 'key', 
-                           'loudness', 'mode', 'speechiness', 'acousticness',
-                           'instrumentalness', 'liveness', 'valence', 'tempo']].values
+    music_features = music_df[['danceability', 'energy', 
+            'loudness', 'speechiness', 'acousticness',
+            'instrumentalness', 'liveness', 'valence', 'tempo']].values
     music_features_scaled = scaler.fit_transform(music_features)
 
-    all_tracks_features = all_tracks[['danceability', 'energy', 'key', 
-                           'loudness', 'mode', 'speechiness', 'acousticness',
-                           'instrumentalness', 'liveness', 'valence', 'tempo']].values
+    all_tracks_features = all_tracks[['danceability', 'energy', 
+            'loudness', 'speechiness', 'acousticness',
+            'instrumentalness', 'liveness', 'valence', 'tempo']].values
     all_tracks_features_scaled = scaler.fit_transform(all_tracks_features)
 
     # Calculate the similarity scores based on music features (cosine similarity)
@@ -192,15 +196,22 @@ def predict():
         
         output = similarity(music_df, music_df_2)
 
-        return render_template('Spotify.html', prediction_text=f'Similarity between the playlists is {round(output, 4) * 100}%')
+        music_combined = pd.concat([music_df, music_df_2])
+        def clean_list(str_list):
+            for char in "[]'":
+                str_list = str_list.replace(char, '')
+            return str_list
+
+        df = content_based_recommendations(music_combined, num_recommendations=10)
+        df["artists"] = df["artists"].apply(clean_list)
+
+        return render_template('Spotify.html', tables = [df.to_html(index = False, classes = 'data', header = 'true')], prediction_text=f"Similarity = {round(output, 2)}%")
     
     except:
         return render_template('Spotify.html')
 
 @app.route('/results',methods=['POST'])
 def results():
-
-    output = 50
     return jsonify(output)
 
 if __name__ == "__main__":
