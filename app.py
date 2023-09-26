@@ -14,12 +14,15 @@ from sklearn.preprocessing import MinMaxScaler
 from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 import math
+import statistics as stats
 global output
+
+model = pickle.load(open("Song_classifier.pkl", "rb"))
 
 def open_spot():
     # Replace with your own Client ID and Client Secret
-    CLIENT_ID = "2ce05a82e04546f1a45d33e19f8d2f45"
-    CLIENT_SECRET = "5e1cfa53241449de99e9cf89329cdd69"
+    CLIENT_ID = "034db75a7c314fedad2479944013138b"
+    CLIENT_SECRET = "ca8fd15f354244e8902c0bbcfc43e0eb"
 
     # Base64 encode the client ID and client secret
     client_credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
@@ -67,7 +70,7 @@ def get_trending_playlist_data(playlist_id, access_token):
             except:
                 continue
 
-            artists = [artist['name'] for artist in track['artists']]
+            artists = ', '.join([artist['name'] for artist in track['artists']])
             album_id = track['album']['id']
             track_id = track['id']
 
@@ -157,13 +160,14 @@ def content_based_recommendations(music_df, num_recommendations=5):
     similarity_scores = cosine_similarity(music_features_scaled, all_tracks_features_scaled)
 
     # Get the indices of the most similar songs
-    similar_song_indices = similarity_scores.argsort()[0][::-1][1:num_recommendations * 5 + 1]
+    similar_song_indices = similarity_scores.argsort()[0][::-1][1:num_recommendations * 15 + 1]
 
     artists = [item for sublist in music_df["artists"] for item in sublist]
 
     # Get the names of the most similar songs based on content-based filtering
     content_based_rec = all_tracks.iloc[similar_song_indices][['name', 'artists', 'release_date', 'popularity']]
-    #content_based_rec.loc[len(set(content_based_rec["artists"]).intersection(set(artists))) == 0, 'popularity'] /= 1.2
+    for artist in set(content_based_rec["artists"]).intersection(set(artists)):
+        content_based_rec.loc[content_based_rec["artists"] == artist, 'popularity'] += 10
     content_based_rec = content_based_rec.sort_values(by="popularity", ascending = False)
     content_based_rec = content_based_rec.loc[~content_based_rec['name'].isin(music_df['name'])].copy()
 
@@ -181,7 +185,7 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    try:
+    # try:
         playlist_id_1 = id_from_url(request.form["play1"])
         playlist_id_2 = id_from_url(request.form["play2"])
 
@@ -201,14 +205,25 @@ def predict():
             for char in "[]'":
                 str_list = str_list.replace(char, '')
             return str_list
+        
+        def vibes(music_df):
+            vibe_list = model.predict(music_df[["valence", "acousticness", "danceability", "energy", "instrumentalness", "liveness", "loudness", "speechiness", "tempo"]])
+            return ["sad", "happy", "energetic", "calm"][stats.mode(vibe_list)]
 
         df = content_based_recommendations(music_combined, num_recommendations=10)
         df["artists"] = df["artists"].apply(clean_list)
 
-        return render_template('Spotify.html', tables = [df.to_html(index = False, classes = 'data', header = 'true')], prediction_text=f"Similarity = {round(output, 2)}%")
+        artists_1 = set(', '.join(music_df["artists"].apply(clean_list).values).split(', '))
+        artists_2 = set(', '.join(music_df_2["artists"].apply(clean_list).values).split(', '))
+
+        common = artists_1.intersection(artists_2)
+
+        return render_template('Spotify.html', tables = [df.to_html(index = False, classes = 'data', header = 'true')], prediction_text=f"Similarity = {round(output, 2)}%", 
+                               common_artists = f"There are {len(common)} common artists: {common}", 
+                               vibe1 = f"The first playlist has {vibes(music_df)} vibes", vibe2 = f"The second playlist has a {vibes(music_df_2)} mood")
     
-    except:
-        return render_template('Spotify.html')
+    # except:
+    #     return render_template('Spotify.html')
 
 @app.route('/results',methods=['POST'])
 def results():
