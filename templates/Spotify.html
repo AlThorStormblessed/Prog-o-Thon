@@ -8,7 +8,7 @@
 <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  
+
 </head>
 
 <body>
@@ -23,10 +23,13 @@
         <label for="lname">Second playlist:</label>
         <input type="text" id="play2" name="play2"><br><br>
       <button style="margin-left: 12px" type="submit">Submit</button>
-      
-
     </form>
+
    <p>{{ prediction_text }}</p>
+   <p> Recommended songs based on playlists: </p>
+   {% for table in tables %}
+        {{ table|safe }}
+    {% endfor %}
 
  </div>
 </body>
