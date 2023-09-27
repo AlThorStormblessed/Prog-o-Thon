@@ -1,71 +1,131 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-html { width: 100%; height:100%; overflow:hidden; }
-
-body { 
-	width: 100%;
-	height:100%;
-	font-family: 'Helvetica';
-	background-image: linear-gradient(to bottom right, rgba(0, 183, 255, 0.89), rgba(0, 0, 0, 0.966));
-	color: #fff;
-	font-size: 24px;
-	text-align:center;
-	letter-spacing:1.4px;
-
+@font-face {
+    font-family: myfont;
+    src: url(./Spotify-Font/GothamBook.ttf);
 }
-.login { 
-	margin-top: 80px;
-	display: inline-block;
-	position: relative;;
-	align-items: center;
-	width:600px;
-	height:400px;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-.login h1 { margin-left: 12px; color: #000000; text-shadow: 5px 5px 5px rgba(0,0,0,0.25); letter-spacing:1px; text-align:center; border-color:black; }
-
-.login h5 { margin-left: 12px; color: rgb(255, 255, 255); text-shadow: 3px 3px 4px rgb(0, 0, 0); letter-spacing:1px; text-align:center; }
-
-.login p { margin-left: 12px; font-size: 50px; color: rgb(196, 178, 18); text-shadow: 4px 4px 3px rgba(0,0,0); letter-spacing:1px; text-align:center; }
-
-input { 
-	width: 60%;  
-	background: rgba(0,0,0,0.3);
-	border: none;
-	outline: none;
-	padding: 10px;
-	font-size: 13px;
-	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
-	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(36, 35, 35, 0.2), 0 1px 1px rgba(255, 255, 255, 0.336);
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
+:root{
+    --var-primary-color: #2888E8FF;
+}
+html{
+    font-size: 62.5%;
+}
+h1,h2,h3,h4{
+    font-family: 'Courier New', Courier, monospace;
+}
+h1{
+    font-size: 4.8rem;
+}
+h2{
+    font-size: 3rem;
+}
+p{
+    font-size: 1.6rem;
+    letter-spacing: 0.08rem;
+}
+button{
+    border: 0.1rem solid #fff;
+    outline: none;
+    padding: .6rem  1.2rem;
+    font-size: 1.7rem;
+    text-transform: capitalize;
+    letter-spacing: 0.05rem;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
 }
 
-button { 
-	width: 60%;  
-	background: rgba(0,0,0,0.3);
-	border: none;
-	outline: none;
-	padding: 10px;
-	font-size: 13px;
-	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
-	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(36, 35, 35, 0.2), 0 1px 1px rgba(255, 255, 255, 0.336);
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
+/*now my main page styling*/
+body{
+    height: 100vh;
+    background-image: url("Spotify.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+.container{
+    height: 10vh;
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ul{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: myfont;
+}
+li > a{
+    color: white;
+    text-decoration: none;
+    
+}
+.top {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.playListlink{
+    min-width: 33vw;
+    min-height: 30vh;
+    background-color: black;
+    opacity: 70%;
+
+}
+#play1 , #play2{
+    color: #e8e8e8;
+}
+.grid-three--column{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+}
+.form-text{
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 3rem 2rem ;
+}
+.form-text p{
+    text-align: center;
+    margin: 2rem 0 3rem 0;
+}
+.CompareTab{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.Comptab{
+    background-color: #fff;
+    color: #000;
+    margin: 2rem 0 3rem 0;
+    border-radius: 10%;
+}
+.Comptab:hover{
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    margin: 2rem 0 3rem 0;
+}
+input{
+    width: 28rem;
+    margin: .7rem 0 ;
+    border: white;
+    background: color #e8e8e8;
+    padding: 1rem 1.8rem ;
+    text-align: center;
+    letter-spacing: 0.06rem;
 }
 
-button:hover{
-	background-color: rgba(0,0,0,0.5);
-}
+
