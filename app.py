@@ -15,14 +15,16 @@ from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 import math
 import statistics as stats
+import plotly.graph_objects as go
 global output
+
 
 model = pickle.load(open("Song_classifier.pkl", "rb"))
 
 def open_spot():
     # Replace with your own Client ID and Client Secret
-    CLIENT_ID = "034db75a7c314fedad2479944013138b"
-    CLIENT_SECRET = "ca8fd15f354244e8902c0bbcfc43e0eb"
+    CLIENT_ID = "b19b77e46f4c4666af4f07a84dc4eeea"
+    CLIENT_SECRET = "8ea7a81066ec43ee91cb681a45eaffc3"
 
     # Base64 encode the client ID and client secret
     client_credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
@@ -143,7 +145,7 @@ def similarity(music_df, music_df_2):
     cos_sim = np.diag(cosine_similarity(music_features_scaled, music_features_scaled_2))
     cos_sim = np.where(cos_sim > 1, 1, cos_sim)
 
-    return np.mean(90 - (np.arccos(cos_sim)) * 57.2958) * 100/90
+    return np.percentile(90 - (np.arccos(cos_sim)) * 57.2958, 50) * 100/90
 
 def content_based_recommendations(music_df, num_recommendations=5):
     music_features = music_df[['danceability', 'energy', 
@@ -181,7 +183,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('Spotify.html')
+    return render_template('index.html')
 
 @app.route('/predict',methods=['POST'])
 def predict():
@@ -200,6 +202,27 @@ def predict():
         
         output = similarity(music_df, music_df_2)
 
+        fig = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = output,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            #delta = {'reference': 60, 'increasing': {'color': "green"}},
+            gauge = {
+                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "black"},
+                'bar': {'color': "darkgreen"},
+                'bgcolor': "white",
+                'borderwidth': 2,
+                'bordercolor': "gray",
+                'steps': [
+                    {'range': [0, 50], 'color': ["lightsalmon", "sandybrown", "lightgreen"][(output > 40) + (output > 70)]},
+                    {'range': [50, 75], 'color': ["orangered", "orange", "limegreen"][(output > 40) + (output > 70)]}],
+                'threshold': {
+                    'line': {'color': "black", 'width': 4},
+                    'thickness': 0.75,
+                    'value': output}}))
+        fig.update_layout(paper_bgcolor='black', font = {'color': "white", 'family': "Arial"})
+        graph_fig = fig.to_html()
+
         music_combined = pd.concat([music_df, music_df_2])
         def clean_list(str_list):
             for char in "[]'":
@@ -212,18 +235,20 @@ def predict():
 
         df = content_based_recommendations(music_combined, num_recommendations=10)
         df["artists"] = df["artists"].apply(clean_list)
+        df.rename(columns = {'artists':'Artists', 'name' : 'Name', 'release_date' : "Release Date", "popularity" : "Popularity"}, inplace = True)
 
         artists_1 = set(', '.join(music_df["artists"].apply(clean_list).values).split(', '))
         artists_2 = set(', '.join(music_df_2["artists"].apply(clean_list).values).split(', '))
 
         common = artists_1.intersection(artists_2)
 
-        return render_template('Spotify.html', tables = [df.to_html(index = False, classes = 'data', header = 'true')], prediction_text=f"Similarity = {round(output, 2)}%", 
-                               common_artists = f"There are {len(common)} common artists: {common}", 
-                               vibe1 = f"The first playlist has {vibes(music_df)} vibes", vibe2 = f"The second playlist has a {vibes(music_df_2)} mood")
+        return render_template('index.html', tables = [df.to_html(index = False, classes = 'data', header = 'true')], prediction_text=f"Similarity = {round(output, 2)}%", 
+                               graph = graph_fig,
+                               common_artists = f"There {['are', 'is'][len(common) == 1]} {len(common)} common {['artists', 'artist'][len(common) == 1]}: {', '.join(common)}", 
+                               vibe1 = f"The first playlist has {vibes(music_df)} vibes", vibe2 = f"The second playlist has {['a', 'an'][vibes(music_df_2) == 2]} {vibes(music_df_2)} mood")
     
     # except:
-    #     return render_template('Spotify.html')
+    #     return render_template('index.html')
 
 @app.route('/results',methods=['POST'])
 def results():
