@@ -1,7 +1,7 @@
 
 @font-face {
     font-family: myfont;
-    src: url(./Spotify-Font/GothamBook.ttf);
+    src: url("C:/Users/anshg/OneDrive/Desktop/Python shit/ML/spotify/Spotify-Font/GothamBook.ttf");
 }
 *{
     margin: 0;
@@ -22,6 +22,7 @@ h1{
 }
 h2{
     font-size: 3rem;
+    color:white;
 }
 p{
     font-size: 1.6rem;
@@ -38,12 +39,14 @@ button{
     color: #fff;
     cursor: pointer;
 }
-
-/*now my main page styling*/
+div.scroll{
+    Width:200px;
+    Height:100px;
+    Overflow-y:scroll;
+}
 body{
     height: 100vh;
-    background-image: url("Spotify.jpeg");
-    background-repeat: no-repeat;
+    background-image: url("https://d3.harvard.edu/platform-digit/wp-content/uploads/sites/2/2021/04/Spotify.jpeg");
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -82,7 +85,7 @@ li > a{
 
 }
 #play1 , #play2{
-    color: #e8e8e8;
+    color: #000000;
 }
 .grid-three--column{
     display: grid;
@@ -127,5 +130,3 @@ input{
     text-align: center;
     letter-spacing: 0.06rem;
 }
-
-
