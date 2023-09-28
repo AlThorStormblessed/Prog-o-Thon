@@ -1,0 +1,255 @@
+@font-face {
+    font-family: myfont;
+    src: url("C:/Users/anshg/OneDrive/Desktop/Python shit/ML/spotify/Spotify-Font/GothamBook.ttf");
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Caveat', cursive;
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Urbanist', sans-serif;
+}
+:root{
+    --var-primary-color: #2888E8FF;
+}
+html{
+    font-size: 62.5%;
+}
+h1,h2,h3,h4{
+    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Caveat', cursive;
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
+    font-family: 'Urbanist', sans-serif;
+}
+h1{
+    font-size: 4.8rem;
+}
+h2{
+    font-size: 3rem;
+    color:black;
+}
+p{
+    font-size: 1.6rem;
+    letter-spacing: 0.08rem;
+    color: white
+}
+button{
+    border: 0.1rem solid #fff;
+    outline: none;
+    padding: .6rem  1.2rem;
+    font-size: 1.7rem;
+    text-transform: capitalize;
+    letter-spacing: 0.05rem;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+div.scroll{
+    Width:100px;
+    Height:800px;
+    Overflow-y:scroll;
+}
+body{
+    height:100vh;
+    background-image: url("https://wallpapers.com/images/featured-full/spotify-background-q8allb95arbxrc0s.jpg");
+    background-repeat: no-repeat;
+    background-color: black;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+.spot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 7rem;
+    padding: 3rem 0 0 0 ;
+}
+.im{
+    width: 11rem;
+    height: 14rem;
+    padding: 4rem 0 0 0 ;
+}
+.logo{
+    display: inline-flex;
+    justify-content: left;
+}
+.container{
+    height: 10vh;
+    width: 95vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:auto;
+}
+.logo a{
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    
+}
+ul{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: myfont;
+}
+li > a{
+    color: black;
+    text-decoration: none;
+    
+}
+.top {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+      padding: 2rem 0;
+    
+}
+.Comptab {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
+  box-sizing: border-box;
+  color: #121212;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1 1 auto;
+  font-family: Inter,sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 0.5;
+  margin: 0;
+  outline: none;
+  padding: 1em 1rem;
+  margin-top: 14.5%;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s,-webkit-box-shadow .2s;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.Comptab:hover {
+  box-shadow: #121212 0 0 0 3px, #1ED760 0 0 0 0;
+}
+#play1 , #play2{
+    color: #000000;
+}
+.grid-three--column{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+}
+.form-text{
+    margin: 0 5rem;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem 2rem ;
+    min-width: 20vw;
+    min-height: 25vh;
+    background-color: black;
+    opacity: 70%;
+    border-radius: 20%;
+    gap: 2rem;
+}
+.form-text p{
+    text-align: center;
+    margin: 2rem 0 3rem 0;
+}
+.CompareTab{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input{
+    width: 24rem;
+    margin: .7rem 0 ;
+    border: white;
+    background: color #e8e8e8;
+    padding: 1rem 1.8rem ;
+    text-align: center;
+    letter-spacing: 0.06rem;
+}
+.buffer{
+    text-align: center;
+    align-items: center;
+    color: black;
+    font-size:40px;
+    min-height: 50%;
+}
+.playlist-link{
+    text-align: center;
+    align-items: center;
+    color: white;
+    outline: green;
+    font-size:40px;
+}
+
+.error{
+    text-align: center;
+    color: red;
+    font-size: 20px;
+}
+.well{
+    color: white;
+}
+.abc{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding-left: 40%;
+    padding-bottom: 5%;
+}
+.hello{
+    border-radius: 50%;
+    background-color: white;
+
+}
+a[target='_blank']{
+    text-decoration: none;
+    color: black;
+}
+.social-icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5rem;
+    margin: auto;
+    
+}
+
+.social-icons > a{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    border: 1.5rem solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+}
+.fa-brands{
+    font-size: 6rem;
+}
+.fa-whatsapp{
+    color: #1ED760;
+}
+.fa-facebook{
+    color: rgb(27, 111, 221);
+}

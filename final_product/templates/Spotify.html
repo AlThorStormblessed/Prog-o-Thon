@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Spoti-compare</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+ <div class="login">
+	<h1>Spotify thingy-mo</h1>
+  <h5>Using recommender system</h5>
+     <!-- Main Input For Receiving Query to our ML -->
+    <!-- <form action="{{ url_for('predict')}}" method="post" enctype="multipart/form-data"> -->
+      <form action="{{ url_for('predict')}}" method = "post">
+        <label for="fname">First playlist:</label>
+        <input type="text" id="play1" name="play1"><br><br>
+        <label for="lname">Second playlist:</label>
+        <input type="text" id="play2" name="play2"><br><br>
+      <button style="margin-left: 12px" type="submit">Submit</button>
+    </form>
+
+   <p>{{ prediction_text }}</p>
+
+   {% block content  %}
+    {{ graph | safe}};
+  {% endblock %}
+   <p> {{ common_artists }}</p>
+   <p>{{ vibe1 }}</p>
+   <p>{{ vibe2 }}</p>
+   <p> Recommended songs based on playlists: </p>
+   {% for table in tables %}
+        {{ table|safe }}
+    {% endfor %}
+
+  
+
+ </div>
+</body>
+</html>

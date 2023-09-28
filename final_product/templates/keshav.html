@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>main Page</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat&family=Kanit:wght@300&family=Urbanist&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="back">
+        <header class="regis-header">
+            <div class="container">
+                <div class="logo">
+                    <a href="http://127.0.0.1:5000/" class="ima">
+                        <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png" alt="logo" class="im"> 
+                    </a>
+                    <h2 class="spot" >SpotCom</h2>
+                </div>
+                <nav>
+                    <ul>
+                        <li class="Home"><a href="http://127.0.0.1:5000/">Home</a></li>
+                        <li class="About"><a href="about.html">About</a></li>
+                        <li class="Contct"><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        
+        <main>
+            <section class="user-container login-section--display">
+             <div class="registration">
+                <div class="grid-two--column">
+                    <div class="form-text">
+                        <h2>Welcome Back</h2>
+                        <p>to keep connected with us please login with your personal info.</p>
+                        <button class="login-btn">Login here</button>
+                    </div>
+                
+                <div class="registers-form">
+                    <h2>Create Account</h2>
+                        <p>
+                            Use your Emails for Registration
+                        </p>
+                        
+                            <div class="input-field">
+                                <label for="Username">
+                                <input type="text"  id="full_name" placeholder="Username">
+                                </label>
+                            </div>
+                            <div class="input-field">
+                                <label for="email">
+                                <input type="text"  id="email" placeholder="Email">
+                                </label>
+                            </div>
+                            <div class="input-field">
+                                <label for="Password">
+                                <input type="password"  id="password" placeholder="Password">
+                                </label>
+                            </div>
+                            <div class="input-field">
+                                <button style="color: black;" onclick="register()">Register</button>
+                            </div>
+                             
+                        </div>
+                    </div>
+            </div>
+
+                <div class="login">
+                    <div class="grid-two--column">
+                    <div class="form-text">
+                        <h2>Hello Friends</h2>
+                        <p>Enter your personal details and start journey with us.</p>
+                        <button class="registration-btn">Register here</button>
+                    </div>
+                
+                <div class="login-form">
+                    <h2>Sign-In</h2>
+                        <p>
+                            Use your Account
+                        </p>
+                        
+                            <div class="input-field">
+                                <label for="email2">
+                                <input type="text"  id="email2" placeholder="Email">
+                                </label>
+                            </div>
+                            <div class="input-field">
+                                <label for="Password2">
+                                <input type="password"  id="password2" placeholder="Password">
+                                </label>
+                            </div>
+                            <div class="input-field">
+                                <button class="amru" href="#" style="color: black;" onclick="login()">Login</button>
+                            </div>
+                        
+                </div></div>
+            </section>
+        </main>
+    </header>
+    <script>
+        const user_con = document.querySelector('.user-container');
+        const regis_btn =  document.querySelector('.registration-btn');
+        const login_btn =  document.querySelector('.login-btn');
+
+        regis_btn.addEventListener('click', () =>  {
+            user_con.classList.add('login-section--display')
+        })
+        login_btn.addEventListener('click', () => {
+            user_con.classList.remove('login-section--display')
+        })
+    </script>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    
+    <!-- Our script must be loaded after firebase references -->
+    <script>
+        // Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyCoQ5vYTXkzqabEBCWLJm0uCpPZZjdm00Y",
+    authDomain: "keshamransh.firebaseapp.com",
+    projectId: "keshamransh",
+    storageBucket: "keshamransh.appspot.com",
+    messagingSenderId: "1083789759825",
+    appId: "1:1083789759825:web:74fe94a25955dcda4d2f70"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  // Initialize variables
+  const auth = firebase.auth()
+  const database = firebase.database()
+  
+  // Set up our register function
+  function register () {
+    // Get all our input fields
+    email = document.getElementById('email').value
+    password = document.getElementById('password').value
+    full_name = document.getElementById('full_name').value
+    // favourite_song = document.getElementById('favourite_song').value
+    // milk_before_cereal = document.getElementById('milk_before_cereal').value
+  
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+      alert('Email or Password is Outta Line!!')
+      return
+      // Don't continue running the code
+    }
+    if (validate_field(full_name) == false) {
+      alert('One or More Extra Fields is Outta Line!!')
+      return
+    }
+    // Move on with Auth
+    auth.createUserWithEmailAndPassword(email, password)
+    .then(function() {
+        // Declare user variable
+      var user = auth.currentUser
+  
+      // Add this user to Firebase Database
+      var database_ref = database.ref()
+      user_con.classList.remove('login-section--display')  
+      // Create User data
+      var user_data = {
+        email : email,
+        full_name : full_name,
+        // favourite_song : favourite_song,
+        // milk_before_cereal : milk_before_cereal,
+        last_login : Date.now()
+      }
+
+      // Push to Firebase Database
+      database_ref.child('users/' + user.uid).set(user_data)
+      // DOne
+      alert('User Created!!')
+    })
+    .catch(function(error) {
+      // Firebase will use this to alert of its errors
+      var error_code = error.code
+      var error_message = error.message
+  
+      alert(error_message)
+    })
+  }
+  
+  // Set up our login function
+  function login () {
+    // Get all our input fields
+    email = document.getElementById('email2').value
+    password = document.getElementById('password2').value
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+        alert('Email or Password is Outta Line!!')
+        return
+        // Don't continue running the code
+    }
+    
+    auth.signInWithEmailAndPassword(email, password)
+    .then(function() {
+        
+        // Declare user variable
+        var user = auth.currentUser
+        
+        // Add this user to Firebase Database
+        var database_ref = database.ref()
+        // Create User data
+        var user_data = {
+            last_login : Date.now()
+        }
+        
+        // Push to Firebase Database
+        database_ref.child('users/' + user.uid).update(user_data)
+        
+        myFunction()
+
+
+      alert('User Logged In!!')
+  
+    })
+    .catch(function(error) {
+      // Firebase will use this to alert of its errors
+      var error_code = error.code
+      var error_message = error.message
+  
+      alert(error_message)
+    })
+  }
+  
+  
+  //redirect
+  function myFunction() {
+  location.replace("http://127.0.0.1:5000/")
+}
+  
+  // Validate Functions
+  function validate_email(email) {
+    expression = /^[^@]+@\w+(\.\w+)+\w$/
+    if (expression.test(email) == true) {
+      // Email is good
+      return true
+    } else {
+      // Email is not good
+      return false
+    }
+  }
+  
+  function validate_password(password) {
+    // Firebase only accepts lengths greater than 6
+    if (password < 6) {
+      return false
+    } else {
+      return true
+    }
+  }
+  
+  function validate_field(field) {
+    if (field == null) {
+      return false
+    }
+  
+    if (field.length <= 0) {
+      return false
+    } else {
+      return true
+    }
+  }
+    </script>
+    </body>
+</html>
