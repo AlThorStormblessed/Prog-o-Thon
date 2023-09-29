@@ -30,7 +30,7 @@ p{
     letter-spacing: 0.08rem;
 }
 button ,input[type="submit"]{
-    border: 0.1rem solid #fff;
+    /* border: 0.1rem solid #000000; */
     outline: none;
     padding: .6rem  1.2rem;
     font-size: 1.7rem;
