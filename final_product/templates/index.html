@@ -10,13 +10,13 @@
         <div class="back">
         <header class="main-header">
             <div class="container">
-                <div class="logo">
+                <div class="logo" >
                     <a href="./index.html" class="ima">
                         <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png" alt="logo" class="im"> 
                     </a>
-                    <h2 class="spot" >SpotCom</h2>
+                    <h2 class="spot"  >SpotCom</h2>
                 </div>
-                <nav>
+                <nav class="textw">
                     <ul>
                         
                         <li class="About"><a href="about.html">About</a></li>
@@ -32,7 +32,7 @@
                         
                         <form action="{{ url_for('predict')}}" method = "post">
                             <div class="grid-three--column">
-                                <div class="form-text">
+                                <div class="form-text" id="play20">
                                     <h2 class="well">PlayList-1</h2>
                                     <div class="input-field">
                                         <label for="PlayList-1">
@@ -44,8 +44,8 @@
                                     <button class="Comptab" type = "submit">Compare</button>
                                     
                                 </div>
-                                <div class="form-text">
-                                    <h2 class="well">PlayList-2</h2>
+                                <div class="form-text" id="play">
+                                    <h2 class="well" >PlayList-2</h2>
                                     <div class="input-field">
                                         <label for="PlayList-2">
                                             <input type="text" name="play2" id="play2" placeholder="Enter The PlayList-2">
@@ -60,6 +60,7 @@
                     </div>
                 </section>
             </div>
+            <div class="second">
             <div class = "buffer">
             {% if recommend %}
                 Scroll down to check your results!!! <br><br>
@@ -94,6 +95,7 @@
                     </a>
                     <a href="#" class = "facebook-btn" target="_blank"><i class="fa-brands fa-facebook"></i>
                     </a>
+                </div>
                 </div>
                 {% endif %}
         </main>
