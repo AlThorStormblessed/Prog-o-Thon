@@ -147,12 +147,12 @@ var firebaseConfig = {
   
     // Validate input fields
     if (validate_email(email) == false || validate_password(password) == false) {
-      alert('Email or Password is Outta Line!!')
+      alert('Email or Password is invalid!!')
       return
       // Don't continue running the code
     }
     if (validate_field(full_name) == false) {
-      alert('One or More Extra Fields is Outta Line!!')
+      alert('One or More Extra Fields is invalid!!')
       return
     }
     // Move on with Auth
@@ -194,7 +194,7 @@ var firebaseConfig = {
     password = document.getElementById('password2').value
     // Validate input fields
     if (validate_email(email) == false || validate_password(password) == false) {
-        alert('Email or Password is Outta Line!!')
+        alert('Email or Password is invalid!!')
         return
         // Don't continue running the code
     }
