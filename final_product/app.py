@@ -20,8 +20,8 @@ global output
 
 def open_spot():
     # Replace with your own Client ID and Client Secret
-    CLIENT_ID = "ff58270d741f427a91fa445ca9aa3d66"
-    CLIENT_SECRET = "a25062b5a03446fa8fe83ad63523efca"
+    CLIENT_ID = "29552cf19dd74bdc9ca2bf1af6a555e4"
+    CLIENT_SECRET = "7e8cac1fa75f480cad828a7c391044a5"
 
     # Base64 encode the client ID and client secret
     client_credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
