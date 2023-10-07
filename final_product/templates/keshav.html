@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>main Page</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Kanit:wght@300&family=Urbanist&display=swap" rel="stylesheet">
@@ -13,14 +13,14 @@
         <header class="regis-header">
             <div class="container">
                 <div class="logo">
-                    <a href="http://127.0.0.1:5000/" class="ima">
+                    <a href="/home" class="ima">
                         <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png" alt="logo" class="im"> 
                     </a>
                     <h2 class="spot" >SpotCom</h2>
                 </div>
                 <nav>
                     <ul>
-                        <li class="Home"><a href="http://127.0.0.1:5000/">Home</a></li>
+                        <li class="Home"><a href="/home">Home</a></li>
                         <li class="About"><a href="about.html">About</a></li>
                         <li class="Contct"><a href="contact.html">Contact</a></li>
                     </ul>
@@ -233,7 +233,7 @@ var firebaseConfig = {
   
   //redirect
   function myFunction() {
-  location.replace("http://127.0.0.1:5000/")
+    window.location.href = window.location.href + "/home"
 }
   
   // Validate Functions
