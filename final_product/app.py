@@ -148,7 +148,7 @@ def similarity(music_df, music_df_2):
     if unscaled > 75:
         return 100
 
-    return (unscaled - 45)/30 * 100
+    return unscaled
 
 def content_based_recommendations(music_df, num_recommendations=5):
     music_features = music_df[['danceability', 'energy', 
@@ -172,7 +172,7 @@ def content_based_recommendations(music_df, num_recommendations=5):
     # Get the names of the most similar songs based on content-based filtering
     content_based_rec = all_tracks.iloc[similar_song_indices][['name', 'artists', 'popularity', 'id']]
     content_based_rec = content_based_rec.drop_duplicates(subset = "name")
-    content_based_rec["id"] = "https://open.spotify.com/track/" + content_based_rec["id"].str[:]
+    #content_based_rec["id"] = "https://open.spotify.com/track/" + content_based_rec["id"].str[:]
     for artist in set(content_based_rec["artists"]).intersection(set(artists)):
         content_based_rec.loc[content_based_rec["artists"] == artist, 'popularity'] += 10
     content_based_rec = content_based_rec.sort_values(by="popularity", ascending = False)
@@ -189,6 +189,10 @@ def id_from_url(url):
 app = Flask(__name__)
 
 @app.route('/')
+def login():
+    return render_template('keshav.html')
+
+@app.route('/home')
 def home():
     return render_template('index.html', show_results = False)
 
@@ -198,6 +202,7 @@ def predict():
     try:
         playlist_id_1 = id_from_url(request.form["play1"])
         playlist_id_2 = id_from_url(request.form["play2"])
+        num_rec = min(int(request.form["rec"]), 40)
 
         all_tracks = pd.read_csv("data/data.csv")
         all_tracks.drop("year", axis = 1, inplace = True)
@@ -237,7 +242,7 @@ def predict():
                 str_list = str_list.replace(char, '')
             return str_list
 
-        df = content_based_recommendations(music_combined, num_recommendations=5)
+        df = content_based_recommendations(music_combined, num_recommendations=num_rec)
         df["artists"] = df["artists"].apply(clean_list)
         df.rename(columns = {'artists':'Artists', 'name' : 'Name', 'id' : "Link"}, inplace = True)
 
@@ -252,13 +257,15 @@ def predict():
         else:
             ellipsis = ""
 
+        rows = [f"{df['Name'].values[i]} by {df['Artists'].values[i]}" for i in range(num_rec)]
+        links = [f"{df['Link'].values[i]}" for i in range(num_rec)]
+
+        print(num_rec)
+
         return render_template('index.html', recommend = "Some recommended songs based on the two playlists are: ",
                                show_results = True, 
-                               row1 = f"{df['Name'].values[0]} by {df['Artists'].values[0]}",  link1 = f"{df['Link'].values[0]}",
-                               row2 = f"{df['Name'].values[1]} by {df['Artists'].values[1]}",  link2 = f" {df['Link'].values[1]}",
-                               row3 = f"{df['Name'].values[2]} by {df['Artists'].values[2]}",  link3 = f" {df['Link'].values[2]}",
-                               row4 = f"{df['Name'].values[3]} by {df['Artists'].values[3]}",  link4 = f" {df['Link'].values[3]}",
-                               row5 = f"{df['Name'].values[4]} by {df['Artists'].values[4]}",  link5 = f" {df['Link'].values[4]}",
+                               num_rec = num_rec,
+                               rows = rows,  links = links,
                                prediction_text=f"Similarity = {round(output, 2)}%", 
                                graph = graph_fig,
                                common_artists = f"There {['are', 'is'][length == 1]} {length} common {['artists', 'artist'][length == 1]}: {', '.join(common)}{ellipsis}")
