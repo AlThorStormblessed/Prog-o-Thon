@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://localhost:5000/results'
+url = 'https://spotcom.vercel.app/'
 r = requests.post(url)
 
 print(r.json())
