@@ -3,102 +3,110 @@
     <head>
         <title>SpotCom</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
     <body>
-        <div class="back">
-        <header class="main-header">
-            <div class="container">
-                <div class="logo" >
-                    <a href="./index.html" class="ima">
-                        <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png" alt="logo" class="im"> 
-                    </a>
-                    <h2 class="spot"  >SpotCom</h2>
-                </div>
-                <nav class="textw">
-                    <ul>
-                        
-                        <li class="About"><a href="about.html">About</a></li>
-                        <li class="Contct"><a href="contact.html">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
-        <main>
-            <div class="top">
-                <section class="user-container login-section--display">
-                    <div class="playListlink">
-                        
-                        <form action="{{ url_for('predict')}}" method = "post">
-                            <div class="grid-three--column">
-                                <div class="form-text" id="play20">
-                                    <h2 class="well">PlayList-1</h2>
-                                    <div class="input-field">
-                                        <label for="PlayList-1">
-                                            <input type="text" name="play1" id="play1" placeholder="Enter The PlayList-1">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="CompareTab">
-                                    <button class="Comptab" type = "submit">Compare</button>
-                                    
-                                </div>
-                                <div class="form-text" id="play">
-                                    <h2 class="well" >PlayList-2</h2>
-                                    <div class="input-field">
-                                        <label for="PlayList-2">
-                                            <input type="text" name="play2" id="play2" placeholder="Enter The PlayList-2">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form><br>
-                        <p class="error">{{ error }}</p>   
-                                              
-                        
+        <div id="loading"></div>
+        <div id = "content">
+            <div class="back">
+            <header class="main-header">
+                <div class="container">
+                    <div class="logo" >
+                        <a href="./index.html" class="ima">
+                            <img src="https://www.freepnglogos.com/uploads/spotify-logo-png/spotify-download-logo-30.png" alt="logo" class="im"> 
+                        </a>
+                        <h2 class="spot"  >SpotCom</h2>
                     </div>
-                </section>
-            </div>
-            <div class="second">
-            <div class = "buffer">
-            {% if recommend %}
-                Scroll down to check your results!!! <br><br>
-                {% endif %}
+                    <nav class="textw">
+                        <ul>
+                            
+                            <li class="About"><a href="about.html">About</a></li>
+                            <li class="Contct"><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
                 </div>
-            <div class="playlist-link" >
+            </header>
+            <main>
+                <div class="top">
+                    <section class="user-container login-section--display">
+                        <div class="playListlink">
+                            
+                            <form action="{{ url_for('predict')}}" method = "post">
+                                <div class="grid-three--column">
+                                    <div class="form-text" id="play20">
+                                        <h2 class="well">PlayList-1</h2>
+                                        <div class="input-field">
+                                            <label for="PlayList-1">
+                                                <input type="text" name="play1" id="play1" placeholder="Enter The PlayList-1">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="CompareTab">
+                                        <label for="Number of recommended songs">
+                                            <input type="text" name="rec" id="rec" placeholder="Number of recommended songs">
+                                        </label>
+                                        <br>
+                                        <button class="Comptab" type = "submit" onclick = "loading()">Compare</button>
+                                        
+                                    </div>
+                                    <div class="form-text" id="play">
+                                        <h2 class="well" >PlayList-2</h2>
+                                        <div class="input-field">
+                                            <label for="PlayList-2">
+                                                <input type="text" name="play2" id="play2" placeholder="Enter The PlayList-2">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form><br>
+                            <p class="error">{{ error }}</p>   
+                                                
+                            
+                        </div>
+                    </section>
+                </div>
+                <div class="second">
+                <div class = "buffer">
                 {% if recommend %}
-                {{ prediction_text }}
+                    Scroll down to check your results!!! <br><br>
+                    {% endif %}
+                    </div>
+                <div class="playlist-link" >
+                    {% if recommend %}
+                    {{ prediction_text }}
 
-                    {% block content  %}
-                        {{ graph | safe}}
-                        {% endblock %}
-                    {{ common_artists }}<br><br>
-            
-                {{ recommend }}<br>
-            </div>
-            <br>
-                <ul class="abc">
-                    <li> <button class="hello"><a href = "{{ link1 }}" target = "_blank"> ▶ </a></button>    {{ row1 }}</li>
-                    <li> <button class="hello"><a href = "{{ link2 }}" target = "_blank"> ▶ </a></button>   {{ row2 }}</li>
-                    <li> <button class="hello"><a href = "{{ link3 }}" target = "_blank"> ▶ </a></button>   {{ row3 }}</li>
-                    <li> <button class="hello"><a href = "{{ link4 }}" target = "_blank"> ▶ </a></button>   {{ row4 }}</li>
-                    <li> <button class="hello"><a href = "{{ link5 }}" target = "_blank"> ▶ </a></button>   {{ row5 }}</li>
-                </ul>
+                        {% block content  %}
+                            {{ graph | safe}}
+                            {% endblock %}
+                        {{ common_artists }}<br><br>
                 
-                <P style="text-align: center; font-size: 3rem;">Share it with your friends on : </P>
+                    {{ recommend }}<br>
+                </div>
+                <br>
+                    <!-- <ul class="abc">
+                        {% for i in range(num_rec) %} 
+                        <li> <button class="hello"><a href = "{{ links[i] }}" target = "_blank"> ▶ </a></button>    {{ rows[i] }}</li>
+                        {% endfor %}
+                    </ul> -->
+                    {% for i in range(num_rec) %} 
+                        <iframe class = "abc" style="border-radius:12px " src="https://open.spotify.com/embed/track/{{ links[i] }}?utm_source=generator&theme=0" width="69%" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    {% endfor %}
+                    <P style="text-align: center; font-size: 3rem;">Share it with your friends on : </P>
 
-                <div class="social-icons">
-                    <a href="#" class = "whatsapp-btn" target="_blank"><i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="#" class = "twitter-btn" target="_blank"><i class="fa-brands fa-x-twitter"></i>
-                    </a>
-                    <a href="#" class = "facebook-btn" target="_blank"><i class="fa-brands fa-facebook"></i>
-                    </a>
-                </div>
-                </div>
-                {% endif %}
-        </main>
+                    <div class="social-icons">
+                        <a href="#" class = "whatsapp-btn" target="_blank"><i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class = "twitter-btn" target="_blank"><i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="#" class = "facebook-btn" target="_blank"><i class="fa-brands fa-facebook"></i>
+                        </a>
+                    </div>
+                    </div>
+                    {% endif %}
+            </main>
+        </div>
         <!-- <script src="share.js"></script> -->
 
         <script>
@@ -120,6 +128,12 @@ let postTitle=encodeURI("Hello look for my spotify playlist similarity: ");
 facebookBtn.setAttribute("href",`https://www.facebook.com/sharer.php?u=${postUrl}`);
 whatsappBtn.setAttribute("href",`https://api.whatsapp.com/send?text=${postTitle} ${postUrl}`);
 twitterBtn.setAttribute("href",`https://twitter.com/share?url=${postUrl}&text=${postTitle}`);
+
+function loading(){
+    $("#loading").show();
+    $("#content").hide();       
+}
         </script>
+
    </body>
 </html>
