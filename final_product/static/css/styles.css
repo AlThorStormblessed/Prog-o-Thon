@@ -9,12 +9,16 @@
     font-family: 'Caveat', cursive;
     font-family: 'Kanit', sans-serif;
     font-family: 'Urbanist', sans-serif;
+    font-weight: bold;
 }
 :root{
     --var-primary-color: #2888E8FF;
 }
 html{
     font-size: 62.5%;
+}
+.back{
+    position: relative;
 }
 h1,h2,h3,h4{
     font-family: 'Courier New', Courier, monospace;
@@ -53,7 +57,7 @@ div.scroll{
 }
 body{
     height:100vh;
-    background-image: url("https://wallpapers.com/images/featured-full/spotify-background-q8allb95arbxrc0s.jpg");
+    background-image: url("background_img.png");
     background-repeat: no-repeat;
     background-color: black;
     background-size: cover;
@@ -75,6 +79,7 @@ body{
 .logo{
     display: inline-flex;
     justify-content: left;
+    margin-right: 20vw;
 }
 .container{
     height: 10vh;
@@ -107,9 +112,9 @@ li > a{
 .top {
     min-height: 90vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;  
-      padding: 2rem 0;
+    padding: 2rem 0;
     
 }
 .Comptab {
@@ -118,12 +123,12 @@ li > a{
   border-radius: 12px;
   box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
   box-sizing: border-box;
-  color: #121212;
+  color: #000000;
   cursor: pointer;
   display: inline-flex;
   flex: 1 1 auto;
   font-family: Inter,sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   justify-content: center;
   line-height: 0.5;
@@ -139,6 +144,9 @@ li > a{
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  font-weight: bolder;
+  height: 17%;
+  width: 60%;
 }
 
 .Comptab:hover {
@@ -146,6 +154,7 @@ li > a{
 }
 #play1 , #play2{
     color: #000000;
+    border-radius: 15%;
 }
 .grid-three--column{
     display: grid;
@@ -160,12 +169,13 @@ li > a{
     align-items: center;
     flex-direction: column;
     padding: 2rem 2rem ;
-    min-width: 20vw;
-    min-height: 25vh;
+    min-width: 25vw;
+    min-height: 40vh;
     background-color: black;
     opacity: 70%;
     border-radius: 20%;
     gap: 2rem;
+
 }
 .form-text p{
     text-align: center;
@@ -175,6 +185,11 @@ li > a{
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 20%;
+    margin-top: 7%;
+    margin-left: 30%;
+    width: 40%;
+    font-weight: bolder;
 }
 
 input{
@@ -196,7 +211,7 @@ input{
 .playlist-link{
     text-align: center;
     align-items: center;
-    color: white;
+    color: rgb(0, 0, 0);
     outline: green;
     font-size:40px;
 }
@@ -212,13 +227,12 @@ input{
 .abc{
     display: flex;
     flex-direction: column;
-    color: white;
-    padding-left: 40%;
-    padding-bottom: 5%;
+    padding-left: 20%;
 }
 .hello{
+    border: solid 1px black;
     border-radius: 50%;
-    background-color: white;
+    background-color: green;
 
 }
 a[target='_blank']{
@@ -253,3 +267,36 @@ a[target='_blank']{
 .fa-facebook{
     color: rgb(27, 111, 221);
 }
+#play{
+    margin-right: 15vw;
+}
+#play20{
+    margin-left: 8vw;
+}
+.textw{
+    position: absolute;
+    right: 10%;
+
+}
+li{
+    font-size: 30px;
+    font-weight: bolder;
+}
+.input-field{
+    border: #000000;
+    border-radius: 20%;
+}
+.second{
+    background-image: url("background_img.png");
+    background-repeat: no-repeat;
+    background-color: black;
+    background-size: cover;
+}
+div#loading {
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: black;
+    background: url("https://cdn.dribbble.com/users/2284480/screenshots/15988331/media/9335cd177db6913a8059ffc9d0c20e11.gif");
+    cursor: wait;
+    }

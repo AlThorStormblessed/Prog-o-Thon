@@ -1,9 +1,2 @@
-numpy
-flask
-requests
-pandas
-spotipy
-tqdm
-scikit-learn
-statistics
-plotly
+gunicorn==21.2.0
+packaging==23.2
