@@ -10,10 +10,8 @@ from spotipy.oauth2 import SpotifyOAuth
 from tqdm import tqdm
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 import math
-import statistics as stats
 import plotly.graph_objects as go
 global output
 
