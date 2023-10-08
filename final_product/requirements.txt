@@ -1,6 +1,5 @@
 numpy
 flask
-base64
 requests
 pandas
 spotipy
