@@ -4,6 +4,6 @@ requests
 pandas
 spotipy
 tqdm
-sklearn
+scikit-learn
 statistics
 plotly
