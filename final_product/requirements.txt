@@ -1,9 +1,6 @@
-numpy
 flask
 requests
 pandas
 spotipy
-tqdm
 scikit-learn
-statistics
 plotly
