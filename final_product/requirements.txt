@@ -7,3 +7,4 @@ spotipy
 plotly
 pillow
 gunicorn
+tqdm
