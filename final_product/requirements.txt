@@ -1,0 +1,8 @@
+scikit-learn
+numpy
+pandas
+flask
+requests
+spotipy
+plotly
+pillow
