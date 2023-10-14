@@ -6,3 +6,4 @@ requests
 spotipy
 plotly
 pillow
+gunicorn
